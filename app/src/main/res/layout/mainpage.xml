@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context=".MainPage">
+    <ImageView
+        android:layout_width="385dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/welcom_coffee"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.13" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text="@string/Bt_OrderCoffee"
+        android:layout_marginTop="30dp"
+        android:id="@+id/Btid_OrderCoffee" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text="@string/Bt_CheckPO"
+        android:id="@+id/Btid_CheckPO" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text="@string/Bt_EditRecipt"
+        android:id="@+id/Btid_EditRecipt" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:text="@string/Bt_EditUserInfo"
+        android:id="@+id/Btid_EditUserInfo" />
+</LinearLayout>

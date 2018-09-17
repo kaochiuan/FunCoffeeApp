@@ -1,0 +1,174 @@
+<resources>
+    <string name="app_name">Fun Coffee</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="Tv_UserName">帳號</string>
+    <string name="Ht_UserName">請輸入帳號</string>
+    <string name="Tv_UserPw">密碼</string>
+    <string name="Ht_UserPw">請輸入密碼</string>
+    <string name="Tv_UserEmail">信箱</string>
+    <string name="Ht_UserEmail">請輸入電子信箱</string>
+
+    <string name="Bt_Login">登入</string>
+    <string name="Bt_Register">建立帳號</string>
+    <string name="Bt_OrderCoffee">喝杯咖啡</string>
+    <string name="Bt_CheckPO">訂單查詢</string>
+    <string name="Bt_EditRecipt">編輯現有訂單</string>
+    <string name="Bt_EditUserInfo">編輯個人資料</string>
+
+    <string name="UserInfo_Title">請輸入個人資料</string>
+    <string name="UserInfo_tvPtName">姓名</string>
+    <string name="UserInfo_htName">請輸入姓名</string>
+    <string name="UserInfo_tvPtGender">性別</string>
+    <string name="UserInfo_tvPtAge">年齡</string>
+    <string name="UserInfo_tvPtPhone">電話</string>
+    <string name="UserInfo_htPhone">請輸入聯絡電話</string>
+    <string name="UserInfo_tvPtAddress">地址</string>
+    <string name="UserInfo_htAddress">請輸入地址</string>
+    <string name="UserInfo_btOK">資料輸入完成</string>
+
+    <string name="UserMenu_cloudMenuName">現有菜單</string>
+    <string name="UserMenu_tvPtName">名稱</string>
+    <string name="UserMenu_htName">請輸入菜單名稱</string>
+    <string name="UserMenu_waterLevel">水量多寡</string>
+    <string name="UserMenu_foamLevel">奶泡</string>
+    <string name="UserMenu_grindSize">研磨粗細</string>
+    <string name="UserMenu_tasteLevel">口味</string>
+    <string name="UserMenu_btMenuOK">儲存菜單</string>
+    <string name="UserMenu_btMenuRegister">新增菜單</string>
+
+    <string name="OrderMenu_tvPtName">菜單名稱</string>
+    <string name="OrderMenu_htName">請選擇想要的咖啡菜單</string>
+
+
+    <string-array name="Coffee_grindLevel">
+        <item>細</item>
+        <item>標準</item>
+        <item>粗</item>
+    </string-array>
+    <string-array name="ID_Coffee_grindLevel">
+        <item>fine</item>
+        <item>medium</item>
+        <item>coarse</item>
+    </string-array>
+    <string-array name="Coffee_waterLevel">
+        <item>多</item>
+        <item>標準</item>
+        <item>少</item>
+    </string-array>
+    <string-array name="ID_Coffee_waterLevel">
+        <item>long</item>
+        <item>standard</item>
+        <item>small</item>
+    </string-array>
+    <string-array name="Coffee_foamLevel">
+        <item>無</item>
+        <item>標準</item>
+        <item>厚</item>
+    </string-array>
+    <string-array name="ID_Coffee_foamLevel">
+        <item>none</item>
+        <item>standard</item>
+        <item>thick</item>
+    </string-array>
+    <string-array name="Coffee_tasteLevel">
+        <item>溫和</item>
+        <item>標準</item>
+        <item>濃烈</item>
+    </string-array>
+    <string-array name="ID_Coffee_tasteLevel">
+        <item>mild</item>
+        <item>standard</item>
+        <item>strong</item>
+    </string-array>
+    <string-array name="Age_Year">
+        <item>1980</item>
+        <item>1981</item>
+        <item>1982</item>
+        <item>1983</item>
+        <item>1984</item>
+        <item>1985</item>
+        <item>1986</item>
+        <item>1987</item>
+        <item>1988</item>
+        <item>1989</item>
+        <item>1990</item>
+        <item>1991</item>
+        <item>1992</item>
+        <item>1993</item>
+        <item>1994</item>
+        <item>1995</item>
+        <item>1996</item>
+        <item>1997</item>
+        <item>1998</item>
+        <item>1999</item>
+        <item>2000</item>
+        <item>2001</item>
+        <item>2002</item>
+        <item>2003</item>
+        <item>2004</item>
+        <item>2005</item>
+    </string-array>
+    <string-array name="Age_Month">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="Age_Day">
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <string name="title_activity_user_recipt">編輯菜單</string>
+    <string name="title_activity_main_page">來杯咖啡享受美好的一天</string>
+    <string name="title_activity_user_info">個人資料</string>
+    <string name="server_destination">http://192.168.1.31:5000</string>
+    <string name="UserMenu_menuSelect">菜單選擇</string>
+    <string name="UserMenu_age">生日</string>
+    <string name="UserMenu_genderMale">男</string>
+    <string name="UserMenu_genderFemale">女</string>
+    <string name="UserMenu_divide">/</string>
+    <string name="UserMenu_cold">冰</string>
+    <string name="UserMenu_hot">熱</string>
+    <string name="title_activity_qrcode">QRCode</string>
+    <string name="title_activity_menu">Menu</string>
+</resources>
