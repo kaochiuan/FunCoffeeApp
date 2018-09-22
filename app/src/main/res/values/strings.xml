@@ -14,7 +14,7 @@
     <string name="Bt_Register">建立帳號</string>
     <string name="Bt_OrderCoffee">喝杯咖啡</string>
     <string name="Bt_CheckPO">訂單查詢</string>
-    <string name="Bt_EditRecipt">編輯現有訂單</string>
+    <string name="Bt_EditMenu">編輯現有菜單</string>
     <string name="Bt_EditUserInfo">編輯個人資料</string>
 
     <string name="UserInfo_Title">請輸入個人資料</string>
@@ -37,10 +37,13 @@
     <string name="UserMenu_tasteLevel">口味</string>
     <string name="UserMenu_btMenuOK">儲存菜單</string>
     <string name="UserMenu_btMenuRegister">新增菜單</string>
-
+    <string name="UserMenu_ItemCount">數量</string>
+    <string name="UserMenu_OrderDetail">訂單內容</string>
     <string name="OrderMenu_tvPtName">菜單名稱</string>
     <string name="OrderMenu_htName">請選擇想要的咖啡菜單</string>
-
+    <string name="MakeOrder_Add">新增</string>
+    <string name="MakeOrder_Delete">刪除</string>
+    <string name="MakeOrder_Submit">送出</string>
 
     <string-array name="Coffee_grindLevel">
         <item>細</item>
@@ -161,7 +164,7 @@
     <string name="title_activity_user_recipt">編輯菜單</string>
     <string name="title_activity_main_page">來杯咖啡享受美好的一天</string>
     <string name="title_activity_user_info">個人資料</string>
-    <string name="server_destination">http://192.168.1.31:5000</string>
+    <string name="server_destination">https://flask-restful-store.herokuapp.com</string>
     <string name="UserMenu_menuSelect">菜單選擇</string>
     <string name="UserMenu_age">生日</string>
     <string name="UserMenu_genderMale">男</string>

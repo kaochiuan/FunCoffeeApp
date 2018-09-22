@@ -10,7 +10,7 @@ class MainPage : Activity() {
 
     private var bt_OrderCoffee: Button? = null
     private var bt_CheckPO: Button? = null
-    private var bt_EditRecipt: Button? = null
+    private var bt_EditMenu: Button? = null
     private var bt_EditUserInfo: Button? = null
 
     private var m_accessToken: String? = null
@@ -40,7 +40,7 @@ class MainPage : Activity() {
         startActivity(intent)
     }
 
-    private val bt_EditReciptListener = View.OnClickListener {
+    private val bt_EditMenuListener = View.OnClickListener {
         val intent = Intent()
         intent.setClass(this@MainPage, Menu::class.java)
 
@@ -74,12 +74,12 @@ class MainPage : Activity() {
     private fun buildViews() {
         bt_OrderCoffee = findViewById(R.id.Btid_OrderCoffee) as Button
         bt_CheckPO = findViewById(R.id.Btid_CheckPO) as Button
-        bt_EditRecipt = findViewById(R.id.Btid_EditRecipt) as Button
+        bt_EditMenu = findViewById(R.id.Btid_EditMenu) as Button
         bt_EditUserInfo = findViewById(R.id.Btid_EditUserInfo) as Button
 
         bt_OrderCoffee!!.setOnClickListener(bt_OrderCoffeeListener)
         bt_CheckPO!!.setOnClickListener(bt_CheckPOListener)
-        bt_EditRecipt!!.setOnClickListener(bt_EditReciptListener)
+        bt_EditMenu!!.setOnClickListener(bt_EditMenuListener)
         bt_EditUserInfo!!.setOnClickListener(bt_EditUserInfoListener)
 
         val bundle = this.intent.extras

@@ -40,14 +40,12 @@ class UserInfo : Activity() {
     var m_accessToken: String? = null
     var m_refreshToken: String? = null
     var m_UserData: UserData = UserData()
-    var m_fg_NewUser: Boolean? = null
     private val TBname = "User"
     private var dbHper: CompUserDBHper? = null
     private val recSet: ArrayList<String>? = null
     private var serverDestination: String? = null
 
     private val bt_UserInfoOKListener = View.OnClickListener {
-        val params = RequestParams()
         val jsonParams = JSONObject()
 
         UserInfo_Update()
@@ -131,7 +129,7 @@ class UserInfo : Activity() {
 
                     m_UserData.m_UserGender = m_JUserInfo_Tmp.getString("gender")
 
-                    val regexPhone = Regex("[1-9]{10}")
+                    val regexPhone = Regex("[0-9]{10}")
                     if(regexPhone.matches(m_JUserInfo_Tmp.getString("phone"))) {
                         m_UserData.m_UserPhone = m_JUserInfo_Tmp.getString("phone")
                     }
@@ -145,7 +143,6 @@ class UserInfo : Activity() {
                         m_UserData.m_UserBdate_D = Integer.valueOf(m_UserBdate_Detail[2])
                     }
 
-                    m_UserBdate = ""
                     UserInfo_Display()
 
                     var msg = "個人資料取得成功"
@@ -184,56 +181,6 @@ class UserInfo : Activity() {
 
                     var msg = "個人資料更新成功"
 
-                    Toast.makeText(this@UserInfo, msg, Toast.LENGTH_SHORT).show()
-
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-
-                Toast.makeText(applicationContext, "使用者資料更新成功", Toast.LENGTH_LONG).show()
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "使用者資料更新失敗:" + "new String(responseBody)", Toast.LENGTH_LONG).show()
-            }
-        })
-    }
-
-    fun invoke_UserInfoCreate(url: String, jsonParams: JSONObject) {
-        val client = AsyncHttpClient()
-        val Temp = "Bearer " + m_accessToken!!
-        client.addHeader("authorization", Temp)
-        //client.addHeader("Content-Type", "application/json");
-        var entity: StringEntity? = null
-        try {
-            entity = StringEntity(jsonParams.toString())
-        } catch (e: UnsupportedEncodingException) {
-            e.printStackTrace()
-        }
-
-        client.post(applicationContext, url, entity, "application/json", object : AsyncHttpResponseHandler() {
-            override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
-
-                try {
-                    val m_JUserInfo_Tmp = JSONObject(String(responseBody))
-
-                    var msg = ""
-                    val RecCount = dbHper!!.RecCount()
-                    if (RecCount > 0) {
-
-                        val rowID = dbHper!!.updateRec(m_UserData).toLong()
-
-                        if (rowID != -1L)
-                            msg = "個人資料更新成功"
-                        else
-                            msg = "個人資料更新失敗"
-                    } else {
-                        val rowID = dbHper!!.insertRec(m_UserData)
-                        if (rowID != -1L)
-                            msg = "個人資料新增成功"
-                        else
-                            msg = "個人資料新增失敗"
-                    }
                     Toast.makeText(this@UserInfo, msg, Toast.LENGTH_SHORT).show()
 
                 } catch (e: JSONException) {
@@ -298,13 +245,5 @@ class UserInfo : Activity() {
         }
 
     }
-
-    companion object {
-
-        //region Establish Menu database
-        private val DBname = "user_profile.db" //"使用者資料0626_v1.db";
-        private val DBversion = 1
-    }
-
 
 }

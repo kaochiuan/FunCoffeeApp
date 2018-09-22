@@ -1,24 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MakeOrder">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="@string/UserMenu_tvPtName"/>
+            android:text="@string/UserMenu_menuSelect"/>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spi_menuItem">
         </Spinner>
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/UserMenu_ItemCount"/>
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:id="@+id/num_menuItemCount">
+        </NumberPicker>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnMakeOrderAdd"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/MakeOrder_Add" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/UserMenu_OrderDetail"/>
+        <ListView
+            android:id="@+id/listOrderContent"
+            android:layout_width="match_parent"
+            android:layout_height="280dp">
+
+        </ListView>
+    </LinearLayout>
+        <Button
+            android:id="@+id/btnMakeOrderDelete"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/MakeOrder_Delete" />
+    </LinearLayout>
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnMakeOrderSubmit"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/MakeOrder_Submit" />
+    </LinearLayout>
+
+</LinearLayout>

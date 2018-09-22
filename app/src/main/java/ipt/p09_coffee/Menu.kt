@@ -1,7 +1,6 @@
 package ipt.p09_coffee
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -46,6 +45,7 @@ class Menu : Activity() {
 
     private val spnMenuListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            mMenuData.menuId = menuList[position].menuId
             val foamPos = idCoffeeFoamLevel!!.indexOf(menuList[position].foamLevel)
             val waterPos = idCoffeeWaterLevel!!.indexOf(menuList[position].waterLevel)
             val tastePos = idCoffeeTasteLevel!!.indexOf(menuList[position].tasteLevel)
@@ -55,7 +55,6 @@ class Menu : Activity() {
             spnTasteLevel!!.setSelection(tastePos)
             spnGrindLevel!!.setSelection(grindPos)
             et_UserMenu_Name!!.setText(menuList[position].menuName)
-            Menu_Update()
         }
 
         override fun onNothingSelected(parent: AdapterView<*>) {
@@ -120,16 +119,22 @@ class Menu : Activity() {
     }
 
     fun invoke_UploadMenu(url: String, menuData: MenuData) {
+        if (menuData.menuId == 0L) {
+            val message = "請選擇新增菜單"
+            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+            return
+        }
+
         val client = AsyncHttpClient()
         val temp = "Bearer " + m_accessToken!!
         val param = mutableMapOf<String, String>()
-        param["name"]= mMenuData.menuName
-        param["menu_type"] = mMenuData.menuType
-        param["taste_level"] = mMenuData.tasteLevel
-        param["water_level"] = mMenuData.waterLevel
-        param["foam_level"] = mMenuData.foamLevel
-        param["grind_size"] = mMenuData.grindLevel
-        param["menu_id"] = mMenuData.menuId.toString()
+        param["name"] = menuData.menuName
+        param["menu_type"] = menuData.menuType
+        param["taste_level"] = menuData.tasteLevel
+        param["water_level"] = menuData.waterLevel
+        param["foam_level"] = menuData.foamLevel
+        param["grind_size"] = menuData.grindLevel
+        param["menu_id"] = menuData.menuId.toString()
 
         client.addHeader("authorization", temp)
         val params = RequestParams(param)
@@ -151,12 +156,12 @@ class Menu : Activity() {
         val client = AsyncHttpClient()
         val temp = "Bearer " + m_accessToken!!
         val param = mutableMapOf<String, String>()
-        param["name"]= mMenuData.menuName
-        param["menu_type"] = mMenuData.menuType
-        param["taste_level"] = mMenuData.tasteLevel
-        param["water_level"] = mMenuData.waterLevel
-        param["foam_level"] = mMenuData.foamLevel
-        param["grind_size"] = mMenuData.grindLevel
+        param["name"] = menuData.menuName
+        param["menu_type"] = menuData.menuType
+        param["taste_level"] = menuData.tasteLevel
+        param["water_level"] = menuData.waterLevel
+        param["foam_level"] = menuData.foamLevel
+        param["grind_size"] = menuData.grindLevel
 
         client.addHeader("authorization", temp)
         val params = RequestParams(param)
@@ -229,19 +234,11 @@ class Menu : Activity() {
 
     private fun Menu_Update() {
         mMenuData.menuName = et_UserMenu_Name!!.text.toString()
-        mMenuData.foamLevel = menuList[spnMenu!!.selectedItemPosition].foamLevel
-        mMenuData.waterLevel = menuList[spnMenu!!.selectedItemPosition].waterLevel
-        mMenuData.grindLevel = menuList[spnMenu!!.selectedItemPosition].grindLevel
-        mMenuData.tasteLevel = menuList[spnMenu!!.selectedItemPosition].tasteLevel
-        mMenuData.menuId = menuList[spnMenu!!.selectedItemPosition].menuId
-        mMenuData.menuType = menuList[spnMenu!!.selectedItemPosition].menuType
+        mMenuData.foamLevel = idCoffeeFoamLevel!![spnFoamLevel!!.selectedItemPosition]
+        mMenuData.waterLevel = idCoffeeWaterLevel!![spnWaterLevel!!.selectedItemPosition]
+        mMenuData.grindLevel = idCoffeeGrindLevel!![spnGrindLevel!!.selectedItemPosition]
+        mMenuData.tasteLevel = idCoffeeTasteLevel!![spnTasteLevel!!.selectedItemPosition]
+        mMenuData.menuType = "customized"
     }
 
-    private fun Menu_Display() {
-        et_UserMenu_Name!!.setText(mMenuData.menuName)
-//        spnWaterLevel!!.setSelection(mMenuData.waterLevel)
-//        spnFoamLevel!!.setSelection(mMenuData.foamLevel)
-//        spnGrindLevel!!.setSelection(mMenuData.grindLevel)
-//        spnTasteLevel!!.setSelection(mMenuData.tasteLevel)
-    }
 }
