@@ -5,27 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".OrderPage"
     >
-    <Spinner
+    <ListView
+        android:id="@+id/listOrderDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:text="@string/UserMenu_menuSelect"
-        android:spinnerMode="dialog"
-        android:id="@+id/spi_CoffeeManuSelect" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/OrderMenu_tvPtName"/>
-        <EditText
-            android:id="@+id/etId_OrderManu_Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:hint="@string/OrderMenu_htName"/>
-    </LinearLayout>
+        android:layout_height="match_parent">
+    </ListView>
+
 </RelativeLayout>

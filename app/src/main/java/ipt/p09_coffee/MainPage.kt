@@ -30,7 +30,7 @@ class MainPage : Activity() {
 
     private val bt_CheckPOListener = View.OnClickListener {
         val intent = Intent()
-        intent.setClass(this@MainPage, QRCode::class.java)
+        intent.setClass(this@MainPage, OrderPage::class.java)
 
         val bundle = Bundle()
         bundle.putString("accessToken", m_accessToken)
