@@ -69,8 +69,8 @@ class OrderPage : Activity() {
 
                 try {
                     val myOrderContent = JSONArray(data)
-                    val orderList = mutableListOf<OrderData>()
                     for (idx in 0 until myOrderContent.length()) {
+                        val orderList = mutableListOf<OrderData>()
                         val orderItem = myOrderContent.getJSONObject(idx)
                         val orderId = orderItem.getLong("order_id")
                         val orderDate = orderItem.getString("order_date")
