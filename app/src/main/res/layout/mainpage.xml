@@ -33,6 +33,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="16sp"
+        android:text="@string/Bt_ScanBarCode"
+        android:id="@+id/Btid_ScanBarCode" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
         android:text="@string/Bt_EditMenu"
         android:id="@+id/Btid_EditMenu" />
     <Button

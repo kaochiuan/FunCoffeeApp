@@ -12,13 +12,25 @@ class MainPage : Activity() {
     private var bt_CheckPO: Button? = null
     private var bt_EditMenu: Button? = null
     private var bt_EditUserInfo: Button? = null
-
+    private var bt_ScanBarCode: Button? = null
     private var m_accessToken: String? = null
     private var m_refreshToken: String? = null
 
     private val bt_OrderCoffeeListener = View.OnClickListener {
         val intent = Intent()
         intent.setClass(this@MainPage, MakeOrder::class.java)
+
+        val bundle = Bundle()
+        bundle.putString("accessToken", m_accessToken)
+        bundle.putString("refreshToken", m_refreshToken)
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+    }
+
+    private val bt_BarCodeScanListener = View.OnClickListener {
+        val intent = Intent()
+        intent.setClass(this@MainPage, BarCodeScanner::class.java)
 
         val bundle = Bundle()
         bundle.putString("accessToken", m_accessToken)
@@ -76,11 +88,12 @@ class MainPage : Activity() {
         bt_CheckPO = findViewById(R.id.Btid_CheckPO) as Button
         bt_EditMenu = findViewById(R.id.Btid_EditMenu) as Button
         bt_EditUserInfo = findViewById(R.id.Btid_EditUserInfo) as Button
-
+        bt_ScanBarCode = findViewById(R.id.Btid_ScanBarCode) as Button
         bt_OrderCoffee!!.setOnClickListener(bt_OrderCoffeeListener)
         bt_CheckPO!!.setOnClickListener(bt_CheckPOListener)
         bt_EditMenu!!.setOnClickListener(bt_EditMenuListener)
         bt_EditUserInfo!!.setOnClickListener(bt_EditUserInfoListener)
+        bt_ScanBarCode!!.setOnClickListener(bt_BarCodeScanListener)
 
         val bundle = this.intent.extras
         m_accessToken = bundle!!.getString("accessToken")
