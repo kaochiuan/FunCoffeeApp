@@ -1,6 +1,8 @@
 package ipt.p09_coffee
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,7 +11,6 @@ import android.widget.Toast
 import com.google.zxing.Result
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 
-import kotlinx.android.synthetic.main.activity_bar_code_scanner.*
 
 class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
     /*
@@ -19,7 +20,7 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
     * add callbacks to obtain result from the fragment
     * */
     private lateinit var mScannerView: ZXingScannerView
-
+    private var serverDestination: String? = null
     private var bt_scanner: Button? = null
 
 
@@ -27,12 +28,14 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bar_code_scanner)
 
+        mScannerView = ZXingScannerView(this)
+        serverDestination = getString(R.string.server_destination)
         bt_scanner = findViewById(R.id.Btn_id_scanner)
         bt_scanner!!.setOnClickListener(bt_ScannerListener)
     }
 
     private val bt_ScannerListener = View.OnClickListener {
-        mScannerView = ZXingScannerView(this)
+        //mScannerView = ZXingScannerView(this)
         setContentView(mScannerView)
 
         mScannerView.setResultHandler(this)
@@ -62,10 +65,23 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
     * visit the GitHub README(https://github.com/dm77/barcodescanner)
     * */
     override fun handleResult(result: Result?) {
-        Toast.makeText(this, result?.text, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, result?.text, Toast.LENGTH_SHORT).show()
 
+        val serial_number = result?.text
+        val url = "$serverDestination/serial_number?serial_number=$serial_number"
+        Toast.makeText(this, url, Toast.LENGTH_SHORT).show()
+        openNewTabWindow(urls = url, context = this)
         //Camera will stop after scanning result, so we need to resume the
         //preview in order scan more codes
-        mScannerView.resumeCameraPreview(this)
+        //mScannerView.resumeCameraPreview(this)
+    }
+
+    fun openNewTabWindow(urls: String, context : Context) {
+        val uris = Uri.parse(urls)
+        val intents = Intent(Intent.ACTION_VIEW, uris)
+        val b = Bundle()
+        b.putBoolean("new_window", true)
+        intents.putExtras(b)
+        context.startActivity(intents)
     }
 }
