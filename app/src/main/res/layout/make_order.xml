@@ -69,7 +69,7 @@
         <ListView
             android:id="@+id/listOrderContent"
             android:layout_width="match_parent"
-            android:layout_height="280dp">
+            android:layout_height="230dp">
 
         </ListView>
     </LinearLayout>
@@ -78,6 +78,24 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="@string/MakeOrder_Delete" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/UserMenu_OrderMessage"
+                android:labelFor="@+id/textOrderMessage"/>
+            <EditText
+                android:id="@+id/textOrderMessage"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:inputType="text"
+                android:importantForAutofill="no"/>
+
+        </LinearLayout>
     </LinearLayout>
     <View
         android:id="@+id/divider2"
@@ -88,6 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btnMakeOrderSubmit"
             android:layout_width="150dp"

@@ -9,7 +9,12 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.zxing.Result
+import com.loopj.android.http.AsyncHttpClient
+import com.loopj.android.http.AsyncHttpResponseHandler
+import cz.msebera.android.httpclient.Header
 import me.dm7.barcodescanner.zxing.ZXingScannerView
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
@@ -67,10 +72,38 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
     override fun handleResult(result: Result?) {
         //Toast.makeText(this, result?.text, Toast.LENGTH_SHORT).show()
 
+        val act_context = this
+        var isUrl = false
         val serial_number = result?.text
         val url = "$serverDestination/serial_number?serial_number=$serial_number"
+        val client = AsyncHttpClient()
+        client.addHeader("Content-Type", "application/json")
+        client.get(url, object : AsyncHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
+                val data = String(responseBody)
+                try {
+                    val mJMessage = JSONObject(data)
+                    val message = mJMessage.getString("customized_message")
+                    if (message.startsWith("http://",ignoreCase = true) or
+                            message.startsWith("https://",ignoreCase = true)){
+                        isUrl = true
+                        openNewTabWindow(urls = message, context = act_context)
+                    }
+                } catch (err_Mag: Exception) {
+                    Toast.makeText(applicationContext, err_Mag.message, Toast.LENGTH_LONG).show()
+                    isUrl = false
+                }
+            }
+
+            override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
+                Toast.makeText(applicationContext, "取得訊息失敗", Toast.LENGTH_LONG).show()
+            }
+        })
+
         Toast.makeText(this, url, Toast.LENGTH_SHORT).show()
-        openNewTabWindow(urls = url, context = this)
+        if(!isUrl) {
+            openNewTabWindow(urls = url, context = this)
+        }
         //Camera will stop after scanning result, so we need to resume the
         //preview in order scan more codes
         //mScannerView.resumeCameraPreview(this)

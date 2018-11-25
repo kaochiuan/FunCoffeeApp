@@ -30,6 +30,7 @@ class MakeOrder : Activity() {
     private var btnMakeOrderDelete: Button? = null
     private var btnMakeOrderSubmit: Button? = null
     private var lvOrderContent: ListView? = null
+    private var etOrderMessage: EditText? = null
     private var serverDestination: String? = null
     private var menuAdapter: ArrayAdapter<MenuData>? = null
     private var orderAdapter: ArrayAdapter<OrderData>? = null
@@ -64,7 +65,7 @@ class MakeOrder : Activity() {
         btnMakeOrderAdd = findViewById(R.id.btnMakeOrderAdd)
         btnMakeOrderDelete = findViewById(R.id.btnMakeOrderDelete)
         btnMakeOrderSubmit = findViewById(R.id.btnMakeOrderSubmit)
-
+        etOrderMessage = findViewById(R.id.textOrderMessage)
         btnMakeOrderAdd!!.setOnClickListener(btnAddListener)
         btnMakeOrderDelete!!.setOnClickListener(btnDeleteListener)
         btnMakeOrderSubmit!!.setOnClickListener(btnSubmitListener)
@@ -118,6 +119,7 @@ class MakeOrder : Activity() {
     private fun invokeMakeOrder(url: String) {
         val temp = "Bearer " + m_accessToken!!
 
+        val message = etOrderMessage!!.text
         val client = AsyncHttpClient()
         client.addHeader("authorization", temp)
         val paramRoot = JSONObject()
@@ -129,8 +131,9 @@ class MakeOrder : Activity() {
             params.put(jsonObj)
         }
 
+
         paramRoot.put("order", params)
-        paramRoot.put("message", "Android phone sent.")
+        paramRoot.put("message", message)
 
         var entity: StringEntity? = null
         try {
