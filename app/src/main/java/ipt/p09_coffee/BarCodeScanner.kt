@@ -70,13 +70,15 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
     * visit the GitHub README(https://github.com/dm77/barcodescanner)
     * */
     override fun handleResult(result: Result?) {
-        //Toast.makeText(this, result?.text, Toast.LENGTH_SHORT).show()
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
 
         val act_context = this
         var isUrl = false
         val serial_number = result?.text
         val url = "$serverDestination/serial_number?serial_number=$serial_number"
         val client = AsyncHttpClient()
+        client.addHeader("authorization", temp)
         client.addHeader("Content-Type", "application/json")
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
@@ -96,7 +98,11 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "取得訊息失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "取得訊息失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
 

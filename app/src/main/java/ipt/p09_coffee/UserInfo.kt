@@ -1,6 +1,7 @@
 package ipt.p09_coffee
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 
 import org.json.JSONException
@@ -37,11 +38,7 @@ class UserInfo : Activity() {
     private var spn_D: Spinner? = null
 
 
-    var m_accessToken: String? = null
-    var m_refreshToken: String? = null
     var m_UserData: UserData = UserData()
-    private val TBname = "User"
-    private var dbHper: CompUserDBHper? = null
     private val recSet: ArrayList<String>? = null
     private var serverDestination: String? = null
 
@@ -76,9 +73,6 @@ class UserInfo : Activity() {
 
     public override fun onPause() {
         super.onPause()
-        if (dbHper != null)
-            dbHper!!.close()
-        dbHper = null
     }
 
     public override fun onResume() {
@@ -89,11 +83,6 @@ class UserInfo : Activity() {
 
 
     private fun buildViews() {
-
-        val bundle = this.intent.extras
-        m_accessToken = bundle!!.getString("accessToken")
-        m_refreshToken = bundle.getString("refreshToken")
-
         m_UserData = UserData("male", "0912345678", 1990, 1, 1)
 
 
@@ -115,10 +104,12 @@ class UserInfo : Activity() {
     }
 
     fun invoke_UserInfoGet(url: String) {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
+
         val client = AsyncHttpClient()
-        val Temp = "Bearer " + m_accessToken!!
         val targetUrl = url
-        client.addHeader("authorization", Temp)
+        client.addHeader("authorization", temp)
         client.addHeader("Content-Type", "application/json")
         client.get(targetUrl, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
@@ -156,15 +147,21 @@ class UserInfo : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "使用者資料取得失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "使用者資料取得失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
 
     fun invoke_UserInfoUpdate(url: String, jsonParams: JSONObject) {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
+
         val client = AsyncHttpClient()
-        val Temp = "Bearer " + m_accessToken!!
-        client.addHeader("authorization", Temp)
+        client.addHeader("authorization", temp)
 
         var entity: StringEntity? = null
         try {
@@ -191,7 +188,11 @@ class UserInfo : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "使用者資料更新失敗:" + "new String(responseBody)", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "使用者資料更新失敗:" + "new String(responseBody)", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }

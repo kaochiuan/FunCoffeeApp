@@ -7,79 +7,57 @@ import android.view.View
 import android.widget.Button
 
 class MainPage : Activity() {
-
+    private var serverDestination: String? = null
     private var bt_OrderCoffee: Button? = null
     private var bt_CheckPO: Button? = null
     private var bt_EditMenu: Button? = null
     private var bt_EditUserInfo: Button? = null
     private var bt_ScanBarCode: Button? = null
-    private var m_accessToken: String? = null
-    private var m_refreshToken: String? = null
 
     private val bt_OrderCoffeeListener = View.OnClickListener {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        TokenManager.refreshAccessToken(this, authToken.refreshToken, serverDestination!!)
         val intent = Intent()
         intent.setClass(this@MainPage, MakeOrder::class.java)
-
-        val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
-        intent.putExtras(bundle)
-
         startActivity(intent)
     }
 
     private val bt_BarCodeScanListener = View.OnClickListener {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        TokenManager.refreshAccessToken(this, authToken.refreshToken, serverDestination!!)
         val intent = Intent()
         intent.setClass(this@MainPage, BarCodeScanner::class.java)
-
-        val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
-        intent.putExtras(bundle)
-
         startActivity(intent)
     }
 
     private val bt_CheckPOListener = View.OnClickListener {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        TokenManager.refreshAccessToken(this, authToken.refreshToken, serverDestination!!)
         val intent = Intent()
         intent.setClass(this@MainPage, OrderPage::class.java)
-
-        val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
-        intent.putExtras(bundle)
-
         startActivity(intent)
     }
 
     private val bt_EditMenuListener = View.OnClickListener {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        TokenManager.refreshAccessToken(this, authToken.refreshToken, serverDestination!!)
         val intent = Intent()
         intent.setClass(this@MainPage, Menu::class.java)
-
-        val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
-        intent.putExtras(bundle)
-
         startActivity(intent)
     }
 
     private val bt_EditUserInfoListener = View.OnClickListener {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        TokenManager.refreshAccessToken(this, authToken.refreshToken, serverDestination!!)
         val intent = Intent()
         intent.setClass(this@MainPage, UserInfo::class.java)
-
-        val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
-        intent.putExtras(bundle)
-
         startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mainpage)
-
+        serverDestination = getString(R.string.server_destination)
         buildViews()
     }
 
@@ -94,10 +72,5 @@ class MainPage : Activity() {
         bt_EditMenu!!.setOnClickListener(bt_EditMenuListener)
         bt_EditUserInfo!!.setOnClickListener(bt_EditUserInfoListener)
         bt_ScanBarCode!!.setOnClickListener(bt_BarCodeScanListener)
-
-        val bundle = this.intent.extras
-        m_accessToken = bundle!!.getString("accessToken")
-        m_refreshToken = bundle.getString("refreshToken")
     }
-
 }

@@ -176,5 +176,5 @@
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_bar_code_scanner">BarCodeScanner</string>
     <string name="UserMenu_OrderMessage">訊息</string>
+    <string name="token_expired">Token Expired</string>
 </resources>
-

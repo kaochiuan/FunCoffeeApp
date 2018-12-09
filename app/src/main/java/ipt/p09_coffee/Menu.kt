@@ -1,6 +1,7 @@
 package ipt.p09_coffee
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -12,8 +13,6 @@ import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 
 class Menu : Activity() {
-    var m_accessToken: String? = null
-    var m_refreshToken: String? = null
     var idCoffeeWaterLevel: Array<String>? = null
     var idCoffeeTasteLevel: Array<String>? = null
     var idCoffeeGrindLevel: Array<String>? = null
@@ -94,10 +93,6 @@ class Menu : Activity() {
 
     private fun buildViews() {
 
-        val bundle = this.intent.extras
-        m_accessToken = bundle!!.getString("accessToken")
-        m_refreshToken = bundle.getString("refreshToken")
-
         //region Interface setting
         bt_UserMenuOK = findViewById(R.id.btId_usermenu_OK)
         bt_UserRegisterMenu = findViewById(R.id.btId_usermenu_Register)
@@ -125,8 +120,9 @@ class Menu : Activity() {
             return
         }
 
-        val client = AsyncHttpClient()
-        val temp = "Bearer " + m_accessToken!!
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
+
         val param = mutableMapOf<String, String>()
         param["name"] = menuData.menuName
         param["menu_type"] = menuData.menuType
@@ -136,6 +132,7 @@ class Menu : Activity() {
         param["grind_size"] = menuData.grindLevel
         param["menu_id"] = menuData.menuId.toString()
 
+        val client = AsyncHttpClient()
         client.addHeader("authorization", temp)
         val params = RequestParams(param)
 
@@ -147,14 +144,20 @@ class Menu : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "菜單上傳失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "菜單上傳失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
 
     fun invoke_RegisterMenu(url: String, menuData: MenuData) {
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
+
         val client = AsyncHttpClient()
-        val temp = "Bearer " + m_accessToken!!
         val param = mutableMapOf<String, String>()
         param["name"] = menuData.menuName
         param["menu_type"] = menuData.menuType
@@ -174,14 +177,19 @@ class Menu : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "菜單上傳失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "菜單上傳失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }
 
 
     fun invoke_InitMenu(url: String) {
-        val temp = "Bearer " + m_accessToken!!
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
 
         val client = AsyncHttpClient()
         client.addHeader("authorization", temp)
@@ -226,7 +234,11 @@ class Menu : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "菜單資料下載失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "菜單資料下載失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
 

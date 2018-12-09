@@ -1,6 +1,7 @@
 package ipt.p09_coffee
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,8 +15,6 @@ import cz.msebera.android.httpclient.Header
 import org.json.JSONArray
 
 class OrderPage : Activity() {
-    var m_accessToken: String? = null
-    var m_refreshToken: String? = null
     private var serverDestination: String? = null
     private var lvOrderDetails: ListView? = null
     private var orderAdapter: ArrayAdapter<OrderPackage>? = null
@@ -30,10 +29,6 @@ class OrderPage : Activity() {
     }
 
     private fun buildViews() {
-        val bundle = this.intent.extras
-        m_accessToken = bundle!!.getString("accessToken")
-        m_refreshToken = bundle.getString("refreshToken")
-
         lvOrderDetails = findViewById(R.id.listOrderDetails)
         invokeLoadOrder("$serverDestination/order")
 
@@ -48,17 +43,15 @@ class OrderPage : Activity() {
         intent.setClass(this@OrderPage, QRCode::class.java)
 
         val bundle = Bundle()
-        bundle.putString("accessToken", m_accessToken)
-        bundle.putString("refreshToken", m_refreshToken)
         bundle.putLong("orderId", orderPackList[position].orderId)
-//        bundle.putParcelable("orderItem", orderPackList[position])
         intent.putExtras(bundle)
 
         startActivity(intent)
     }
 
     private fun invokeLoadOrder(url: String) {
-        val temp = "Bearer " + m_accessToken!!
+        val authToken = PreferenceHelper.getAuthToken(this)
+        val temp = "Bearer ${authToken.accessToken}"
 
         val client = AsyncHttpClient()
         client.addHeader("authorization", temp)
@@ -75,7 +68,7 @@ class OrderPage : Activity() {
                         val orderId = orderItem.getLong("order_id")
                         val orderDate = orderItem.getString("order_date")
                         val orderContent = orderItem.getJSONArray("order_contents")
-                        for (idy in 0 until orderContent.length()){
+                        for (idy in 0 until orderContent.length()) {
                             val orderExpand = orderContent.getJSONObject(idy)
                             val menuId = orderExpand.getLong("menu_id")
                             val menuName = orderExpand.getString("menu_name")
@@ -106,7 +99,11 @@ class OrderPage : Activity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Toast.makeText(applicationContext, "訂單資料下載失敗", Toast.LENGTH_LONG).show()
+                if (statusCode == 401) {
+                    Toast.makeText(applicationContext, getString(R.string.token_expired), Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(applicationContext, "訂單資料下載失敗", Toast.LENGTH_LONG).show()
+                }
             }
         })
 
