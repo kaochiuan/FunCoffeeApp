@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,7 +91,7 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
                     val message = mJMessage.getString("customized_message")
                     if (message.startsWith("http://", ignoreCase = true) or
                             message.startsWith("https://", ignoreCase = true)) {
-                        openNewTabWindow(urls = message, context = actContext)
+                            showGoToWebsiteDialog(actContext,"即將前往外部網站 - $message", message)
                     } else {
                         showPopupWindow(message = message)
                     }
@@ -110,7 +111,24 @@ class BarCodeScanner : AppCompatActivity(), ZXingScannerView.ResultHandler {
         })
         //Camera will stop after scanning result, so we need to resume the
         //preview in order scan more codes
-        mScannerView.resumeCameraPreview(this)
+        //mScannerView.resumeCameraPreview(this)
+    }
+
+    fun showGoToWebsiteDialog(context: Context, message: String, url: String){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("小提示")
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton("繼續") { dialog, which ->
+            openNewTabWindow(urls = url, context = context)
+            finish()
+        }
+        builder.setNegativeButton("取消") { dialog, which ->
+            dialog.cancel()
+            mScannerView.resumeCameraPreview(this)
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     fun openNewTabWindow(urls: String, context: Context) {
