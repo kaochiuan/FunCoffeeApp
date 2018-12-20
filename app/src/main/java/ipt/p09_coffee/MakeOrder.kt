@@ -134,7 +134,7 @@ class MakeOrder : Activity() {
 
         var entity: StringEntity? = null
         try {
-            entity = StringEntity(paramRoot.toString())
+            entity = StringEntity(paramRoot.toString(), "UTF-8")
             entity.contentType = BasicHeader(HTTP.CONTENT_TYPE, ContentType.APPLICATION_JSON.mimeType)
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()

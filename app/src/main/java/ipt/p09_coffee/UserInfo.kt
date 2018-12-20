@@ -165,7 +165,7 @@ class UserInfo : Activity() {
 
         var entity: StringEntity? = null
         try {
-            entity = StringEntity(jsonParams.toString())
+            entity = StringEntity(jsonParams.toString(), "UTF-8")
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
