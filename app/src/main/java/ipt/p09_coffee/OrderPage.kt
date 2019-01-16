@@ -77,10 +77,11 @@ class OrderPage : Activity() {
                             val grindLevel = orderExpand.getString("grind_size")
                             val foamLevel = orderExpand.getString("foam_level")
                             val menuType = orderExpand.getString("menu_type")
+                            val coffeeOption = orderExpand.getString("coffee_option")
                             val orderCups = orderExpand.getInt("counts")
 
                             val order = OrderData(MenuData(menuName, waterLevel, foamLevel,
-                                    grindLevel, tasteLevel, menuId, menuType), orderCups)
+                                    grindLevel, tasteLevel, menuId, menuType, coffeeOption), orderCups)
 
                             orderList.add(order)
                         }

@@ -13,6 +13,7 @@ class MenuData(var menuName: String
                , var tasteLevel: String      // mild, standard, strong
                , var menuId: Long        // ID on web server
                , var menuType: String
+               , var coffeeOption: String  // coffee_A, coffee_B
 ):Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -21,6 +22,7 @@ class MenuData(var menuName: String
             parcel.readString(),
             parcel.readString(),
             parcel.readLong(),
+            parcel.readString(),
             parcel.readString())
 
     /**
@@ -38,6 +40,7 @@ class MenuData(var menuName: String
         parcel.writeString(tasteLevel)
         parcel.writeLong(menuId)
         parcel.writeString(menuType)
+        parcel.writeString(coffeeOption)
     }
 
     override fun describeContents(): Int = 0

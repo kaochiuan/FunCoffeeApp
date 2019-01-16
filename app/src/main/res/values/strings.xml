@@ -2,6 +2,7 @@
     <string name="app_name">Fun Coffee</string>
     <string name="action_settings">Settings</string>
     <string name="Bt_ScanBarCode">掃瞄Code</string>
+    <string name="Bt_BarCodeOK">繼續</string>
 
     <string name="Tv_UserName">帳號</string>
     <string name="Ht_UserName">請輸入帳號</string>
@@ -31,6 +32,7 @@
     <string name="UserMenu_cloudMenuName">現有菜單</string>
     <string name="UserMenu_tvPtName">名稱</string>
     <string name="UserMenu_htName">請輸入菜單名稱</string>
+    <string name="UserMenu_coffeeOption">咖啡品項</string>
     <string name="UserMenu_waterLevel">水量多寡</string>
     <string name="UserMenu_foamLevel">奶泡</string>
     <string name="UserMenu_grindSize">研磨粗細</string>
@@ -44,6 +46,15 @@
     <string name="MakeOrder_Add">新增</string>
     <string name="MakeOrder_Delete">刪除</string>
     <string name="MakeOrder_Submit">送出</string>
+
+    <string-array name="Coffee_coffeeOption">
+        <item>咖啡A</item>
+        <item>咖啡B</item>
+    </string-array>
+    <string-array name="ID_Coffee_coffeeOption">
+        <item>coffee_A</item>
+        <item>coffee_B</item>
+    </string-array>
 
     <string-array name="Coffee_grindLevel">
         <item>細</item>

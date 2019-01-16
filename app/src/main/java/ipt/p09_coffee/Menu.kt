@@ -1,7 +1,6 @@
 package ipt.p09_coffee
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -13,6 +12,7 @@ import com.loopj.android.http.RequestParams
 import cz.msebera.android.httpclient.Header
 
 class Menu : Activity() {
+    var idCoffeeCoffeeOption: Array<String>? = null
     var idCoffeeWaterLevel: Array<String>? = null
     var idCoffeeTasteLevel: Array<String>? = null
     var idCoffeeGrindLevel: Array<String>? = null
@@ -25,9 +25,11 @@ class Menu : Activity() {
     private var spnGrindLevel: Spinner? = null
     private var spnFoamLevel: Spinner? = null
     private var spnTasteLevel: Spinner? = null
+    private var spnCoffeeOption: Spinner? = null
 
     private var mMenuData: MenuData = MenuData("Test", WaterLevels.STANDARD.value,
-            FoamLevels.STANDARD.value, GrindLevels.MEDIUM.value, TasteLevels.STANDARD.value, 0, MenuTypes.CUSTOMIZED.value)
+            FoamLevels.STANDARD.value, GrindLevels.MEDIUM.value, TasteLevels.STANDARD.value,
+            0, MenuTypes.CUSTOMIZED.value, CoffeeOptions.CoffeeA.value)
     private var menuAdapter: ArrayAdapter<MenuData>? = null
     private val menuList: MutableList<MenuData> = mutableListOf()
     private var serverDestination: String? = null
@@ -45,6 +47,7 @@ class Menu : Activity() {
     private val spnMenuListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             mMenuData.menuId = menuList[position].menuId
+            val coffeePos = idCoffeeCoffeeOption!!.indexOf(menuList[position].coffeeOption)
             val foamPos = idCoffeeFoamLevel!!.indexOf(menuList[position].foamLevel)
             val waterPos = idCoffeeWaterLevel!!.indexOf(menuList[position].waterLevel)
             val tastePos = idCoffeeTasteLevel!!.indexOf(menuList[position].tasteLevel)
@@ -53,6 +56,7 @@ class Menu : Activity() {
             spnWaterLevel!!.setSelection(waterPos)
             spnTasteLevel!!.setSelection(tastePos)
             spnGrindLevel!!.setSelection(grindPos)
+            spnCoffeeOption!!.setSelection(coffeePos)
             et_UserMenu_Name!!.setText(menuList[position].menuName)
         }
 
@@ -78,6 +82,7 @@ class Menu : Activity() {
         idCoffeeTasteLevel = resources.getStringArray(R.array.ID_Coffee_tasteLevel)
         idCoffeeFoamLevel = resources.getStringArray(R.array.ID_Coffee_foamLevel)
         idCoffeeGrindLevel = resources.getStringArray(R.array.ID_Coffee_grindLevel)
+        idCoffeeCoffeeOption = resources.getStringArray(R.array.ID_Coffee_coffeeOption)
         buildViews()
     }
 
@@ -98,6 +103,7 @@ class Menu : Activity() {
         bt_UserRegisterMenu = findViewById(R.id.btId_usermenu_Register)
         et_UserMenu_Name = findViewById(R.id.etId_UserMenu_Name)
         spnMenu = findViewById(R.id.spi_CoffeeMenuCloud)
+        spnCoffeeOption = findViewById(R.id.spi_coffeeOption)
         spnWaterLevel = findViewById(R.id.spi_waterLevel)
         spnGrindLevel = findViewById(R.id.spi_grindSize)
         spnFoamLevel = findViewById(R.id.spi_foamLevel)
@@ -130,6 +136,7 @@ class Menu : Activity() {
         param["water_level"] = menuData.waterLevel
         param["foam_level"] = menuData.foamLevel
         param["grind_size"] = menuData.grindLevel
+        param["coffee_option"] = menuData.coffeeOption
         param["menu_id"] = menuData.menuId.toString()
 
         val client = AsyncHttpClient()
@@ -165,6 +172,7 @@ class Menu : Activity() {
         param["water_level"] = menuData.waterLevel
         param["foam_level"] = menuData.foamLevel
         param["grind_size"] = menuData.grindLevel
+        param["coffee_option"] = menuData.coffeeOption
 
         client.addHeader("authorization", temp)
         val params = RequestParams(param)
@@ -215,9 +223,11 @@ class Menu : Activity() {
                             val menuTasteLevel = mJMenuTmp.getString("taste_level")
                             val menuGrindSize = mJMenuTmp.getString("grind_size")
                             val menuType = mJMenuTmp.getString("menu_type")
+                            val menuCoffeeOption = mJMenuTmp.getString("coffee_option")
 
                             val menuItem = MenuData(menuName, menuWaterLevel, menuFoamLevel,
-                                    menuGrindSize, menuTasteLevel, menuId, menuType)
+                                    menuGrindSize, menuTasteLevel, menuId,
+                                    menuType, menuCoffeeOption)
                             menuList.add(menuItem)
                         }
                     }
@@ -250,6 +260,7 @@ class Menu : Activity() {
         mMenuData.waterLevel = idCoffeeWaterLevel!![spnWaterLevel!!.selectedItemPosition]
         mMenuData.grindLevel = idCoffeeGrindLevel!![spnGrindLevel!!.selectedItemPosition]
         mMenuData.tasteLevel = idCoffeeTasteLevel!![spnTasteLevel!!.selectedItemPosition]
+        mMenuData.coffeeOption = idCoffeeCoffeeOption!![spnCoffeeOption!!.selectedItemPosition]
         mMenuData.menuType = "customized"
     }
 

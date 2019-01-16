@@ -35,7 +35,8 @@ class MakeOrder : Activity() {
     private val menuList: MutableList<MenuData> = mutableListOf()
     private val orderList: MutableList<OrderData> = mutableListOf()
     private var mMenuData: MenuData = MenuData("Test", WaterLevels.STANDARD.value,
-            FoamLevels.STANDARD.value, GrindLevels.MEDIUM.value, TasteLevels.STANDARD.value, 0, MenuTypes.CUSTOMIZED.value)
+            FoamLevels.STANDARD.value, GrindLevels.MEDIUM.value, TasteLevels.STANDARD.value,
+            0, MenuTypes.CUSTOMIZED.value, CoffeeOptions.CoffeeA.value)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -207,9 +208,10 @@ class MakeOrder : Activity() {
                             val menuTasteLevel = mJMenuTmp.getString("taste_level")
                             val menuGrindSize = mJMenuTmp.getString("grind_size")
                             val menuType = mJMenuTmp.getString("menu_type")
+                            val menuCoffeeOption = mJMenuTmp.getString("coffee_option")
 
                             val menuItem = MenuData(menuName, menuWaterLevel, menuFoamLevel,
-                                    menuGrindSize, menuTasteLevel, menuId, menuType)
+                                    menuGrindSize, menuTasteLevel, menuId, menuType, menuCoffeeOption)
                             menuList.add(menuItem)
                         }
                     }

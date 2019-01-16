@@ -1,5 +1,9 @@
 package ipt.p09_coffee
 
+enum class CoffeeOptions(val value: String) {
+    CoffeeA("coffee_A"), CoffeeB("coffee_B")
+}
+
 enum class WaterLevels(val value: String) {
     LONG("long"), STANDARD("standard"), SMALL("small")
 }
@@ -25,6 +29,17 @@ enum class MenuTypes(val value: String) {
     CUSTOMIZED("customized"), GENERAL("general")
 }
 
+fun parseCoffeeOptions(value: String): CoffeeOptions {
+    var result: CoffeeOptions = CoffeeOptions.CoffeeA
+
+    for (c in CoffeeOptions.values()) {
+        if (value == c.value) {
+            result = c
+            break
+        }
+    }
+    return result
+}
 
 fun parseWaterLevels(value: String): WaterLevels {
     var result: WaterLevels = WaterLevels.STANDARD
